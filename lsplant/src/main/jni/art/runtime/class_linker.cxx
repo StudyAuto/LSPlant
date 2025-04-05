@@ -174,9 +174,9 @@ public:
             handler(ShouldUseInterpreterEntrypoint_);
         }
 
-        bool method_FixupStaticTrampolines_hooked = handler(FixupStaticTrampolinesWithThread_,
-				FixupStaticTrampolines_, FixupStaticTrampolinesRaw_);
-        if (!method_FixupStaticTrampolines_hooked) LOGD("method FixupStaticTrampolines is inlined");
+        // bool method_FixupStaticTrampolines_hooked = handler(FixupStaticTrampolinesWithThread_,
+		// 		FixupStaticTrampolines_, FixupStaticTrampolinesRaw_);
+        // if (!method_FixupStaticTrampolines_hooked) LOGD("method FixupStaticTrampolines is inlined");
 
         // if (!handler(RegisterNativeClassLinker_, RegisterNative_, RegisterNativeFast_,
         //                   RegisterNativeThread_) ||
@@ -185,15 +185,15 @@ public:
         //     return false;
         // }
 
-        if (sdk_int >= __ANDROID_API_R__) {
-            if constexpr (kArch != Arch::kX86 && kArch != Arch::kX86_64) {
-                if (!handler(AdjustThreadVisibilityCounter_, MarkVisiblyInitialized_) &&
-                    !method_FixupStaticTrampolines_hooked) {
-                    // should hook MarkVisiblyInitialized if FixupStaticTrampolines is inlined
-                    LOGW("MarkVisiblyInitialized not hooked");
-                }
-            }
-        }
+        // if (sdk_int >= __ANDROID_API_R__) {
+        //     if constexpr (kArch != Arch::kX86 && kArch != Arch::kX86_64) {
+        //         if (!handler(AdjustThreadVisibilityCounter_, MarkVisiblyInitialized_) &&
+        //             !method_FixupStaticTrampolines_hooked) {
+        //             // should hook MarkVisiblyInitialized if FixupStaticTrampolines is inlined
+        //             LOGW("MarkVisiblyInitialized not hooked");
+        //         }
+        //     }
+        // }
 
         if (!handler(SetEntryPointsToInterpreter_)) [[likely]] {
             if (handler(GetOptimizedCodeFor_, true)) [[likely]] {
